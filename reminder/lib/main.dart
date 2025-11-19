@@ -90,6 +90,7 @@ class _ReminderHomePageState extends State<ReminderHomePage> {
           // 添加新提醒
           _addNewReminder();
         },
+        shape: const CircleBorder(),
         child: Icon(Icons.add),
         tooltip: '添加提醒',
       ),
