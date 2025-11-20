@@ -27,7 +27,13 @@ class _ReminderHomePageState extends State<ReminderHomePage> {
   int _selectedIndex = 0;
   
   List<ReminderItem> reminders = [
-   //举例提醒事项
+    // 示例提醒事项
+    ReminderItem(
+      title: "学习Flutter",
+      description: "完成组件练习",
+      time: "10:00",
+      completed: false,
+    ),
   ];
 
   void _onItemTapped(int index) {
@@ -39,14 +45,11 @@ class _ReminderHomePageState extends State<ReminderHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE3F2FD),
       appBar: AppBar(
         title: Text('提醒'),
         backgroundColor: Color(0xFFE3F2FD),
         actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {},
@@ -87,11 +90,31 @@ class _ReminderHomePageState extends State<ReminderHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // 添加新提醒
-          _addNewReminder();
+          showDialog(
+            context: context, 
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("添加"), // 修正中文引号
+                content: Text("这是一个弹窗示例"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context), // 关闭弹窗
+                    child: Text("取消"),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context); // 关闭弹窗
+                      _addNewReminder(); // 确认后调用添加方法
+                    },
+                    child: Text("确认"),
+                  ),
+                ],
+              );
+            },
+          );
         },
         shape: const CircleBorder(),
-        child: Icon(Icons.add),
+        child: Icon(Icons.add), // 恢复正确的child
         tooltip: '添加提醒',
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -118,7 +141,17 @@ class _ReminderHomePageState extends State<ReminderHomePage> {
   }
 
   void _addNewReminder() {
-    // 这里可以跳转到添加提醒页面
+    // 示例：添加新的提醒事项
+    setState(() {
+      reminders.add(
+        ReminderItem(
+          title: "新提醒",
+          description: "这是通过弹窗添加的新提醒",
+          time: "12:00",
+          completed: false,
+        ),
+      );
+    });
     print('添加新提醒');
   }
 }
@@ -211,6 +244,3 @@ class ReminderCard extends StatelessWidget {
     );
   }
 }
-
-
-
